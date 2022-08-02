@@ -22,7 +22,7 @@ fpath = args.SCREEN_NAME.lstrip('@') + '.txt'
 
 max_id = None
 with open(fpath, 'wb') as f:
-	for i in range(50):
+	for _ in range(50):
 		tweets = api.GetUserTimeline(screen_name=args.SCREEN_NAME, count=200, max_id=max_id)
 
 		if len(tweets) < 1:
@@ -37,9 +37,6 @@ with open(fpath, 'wb') as f:
 			except:
 				continue
 
-			if not max_id:
+			if not max_id or status.id < max_id:
 				max_id = status.id - 1
-			elif status.id < max_id:
-				max_id = status.id - 1
-
 		time.sleep(1)
